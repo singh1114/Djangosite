@@ -1,0 +1,40 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	font-family: Ubuntu;
+	color: #FFF5B9;
+}
+#header {
+	border : none;
+	transition-duration: 0.5s;
+	margin: 0px;
+	background: none;
+}
+#header .navbar-brand strong{
+	font-family: Ubuntu;
+	font-size: 32px;
+}
+.container-fluid{
+	background: #343434;
+}
+.container-fluid, .col-md-12{
+	padding: 0px;
+}
+.row{
+	margin: 0px;
+}
+#header li a strong{
+	color: #FFF5B9;
+}
+#header li a:hover{
+	border-bottom: 3px solid red;
+}
+#main-content{
+	text-align: center;
+}
+#footer{
+	width: 100px;
+}
+.nav{
+	transition-duration: 1s;
+}

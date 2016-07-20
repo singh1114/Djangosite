@@ -7,22 +7,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body>
 	<div class="container-fluid">
-		<nav class="navbar navbar-default navbar-fixed-top" id="header" style="background:none; border:none; ">
+		<nav class="navbar navbar-default navbar-fixed-top" id="header">
 		    <div class="container">
 			    <div class="navbar-header">
-			      <a class="navbar-brand" href="#"><strong style="font-family: Permanent Marker; font-size : 32px; color: #EA4525;">Duggal Industries</strong></a>
+			      <a class="navbar-brand" href="#"><strong>Duggal Building Material Store</strong></a>
 			    </div>
 			    <ul class="nav navbar-nav" id="nav-list" style="float:right; color: #EA4525;">
-				    <li class="active"><a href="/">Home</a></li>
-				    <li><a href="#">Products</a></li>
-				    <li><a href="/your_list/">Contact Us</a></li>
-
-				    <li><a href="/createtask">About Us</a></li>
+				    <li><a href="/"><strong>Home</strong></a></li>
+				    <li><a href="#product"><strong>Products</strong></a></li>
+				    <li><a href="#"><strong>Contact Us</strong></a></li>
+				    <li><a href="#"><strong>About Us</strong></a></li>
 			    </ul>
 		    </div>
 		</nav>
@@ -46,7 +45,7 @@
 	    $(document).scroll(function() { 
         scroll_start = $(this).scrollTop();
         if(scroll_start > offset.top) {
-        	$('#header').css('background-color', 'rgba(34,34,34,0.9)');
+        	$('#header').css('background-color', 'rgba(34,34,34,1.0)');
         } else {
           	$('#header').css('background-color', 'transparent');
         }

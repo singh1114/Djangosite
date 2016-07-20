@@ -1,6 +1,97 @@
 {% extends 'webportal/base.html' %}
 {% load staticfiles %}
 {% block content %}
-	<img src="{% static 'images/construction.jpg' %}" style=" width:100vw; height:100vh; margin-left:-30px;">
+	<img src="{% static 'images/construction.jpg' %}" id="main-image">
+	<div class="col-md-6 col-md-offset-3" id="main-tagline">
+		<h1><strong>We will help you to Build it for you!</strong></h1>
+	</div>
+	<div class="container" id="all-products">
+		<a name="product"></a>
+		<h1><strong>Products we offer</strong></h1><hr/>
+		<div class = "col-sm-6 col-md-3" id="product">
+	        <div class = "thumbnail">
+	        	<img src = "{% static 'images/cement.jpg' %}" alt = "Generic placeholder thumbnail">
+	        </div>
+	        <div class = "caption">
+	        <h3>Cement</h3>
+	        <p>We deal with all companies and all types of cement.</p>	         
+	        <p>
+	            <a href = "#" class = "btn btn-primary" role = "button">
+	               Buy from us
+	            </a>    
+	        </p>	         
+	    	</div>
+	    </div>
+	    <div class = "col-sm-6 col-md-3" id="product">
+	        <div class = "thumbnail">
+	        	<img src = "{% static 'images/course.jpg' %}" alt = "Generic placeholder thumbnail">
+	        </div>
+	        <div class = "caption">
+	        <h3>Course Aggregate</h3>
+	        <p>We deal with all companies and all types of cement.</p>	         
+	        <p>
+	            <a href = "#" class = "btn btn-primary" role = "button">
+	               Buy from us
+	            </a>    
+	        </p>	         
+	    	</div>
+		</div>
+		<div class = "col-sm-6 col-md-3" id="product">
+	        <div class = "thumbnail">
+	        	<img src = "{% static 'images/cement.jpg' %}" alt = "Generic placeholder thumbnail">
+	        </div>
+	        <div class = "caption">
+	        <h3>Cement</h3>
+	        <p>We deal with all companies and all types of cement.</p>	         
+	        <p>
+	            <a href = "#" class = "btn btn-primary" role = "button">
+	               Buy from us
+	            </a>    
+	        </p>	         
+	    	</div>
+	    </div>
+		<div class = "col-sm-6 col-md-3" id="product" style>
+	        <div class = "thumbnail">
+	        	<img src = "{% static 'images/course.jpg' %}" alt = "Generic placeholder thumbnail">
+	        </div>
+	        <div class = "caption">
+	        <h3>Course Aggregate</h3>
+	        <p>We deal with all companies and all types of cement.</p>	         
+	        <p>
+	            <a href = "#" class = "btn btn-primary" role = "button">
+	               Buy from us
+	            </a>    
+	        </p>	         
+	    	</div>
+		</div>
+		<div class = "col-sm-6 col-md-3" id="product">
+	        <div class = "thumbnail">
+	        	<img src = "{% static 'images/cement.jpg' %}" alt = "Generic placeholder thumbnail">
+	        </div>
+	        <div class = "caption">
+	        <h3>Cement</h3>
+	        <p>We deal with all companies and all types of cement.</p>	         
+	        <p>
+	            <a href = "#" class = "btn btn-primary" role = "button">
+	               Buy from us
+	            </a>    
+	        </p>	         
+	    	</div>
+	    </div>
+		<div class = "col-sm-6 col-md-3" id="product" style>
+	        <div class = "thumbnail">
+	        	<img src = "{% static 'images/course.jpg' %}" alt = "Generic placeholder thumbnail">
+	        </div>
+	        <div class = "caption">
+	        <h3>Course Aggregate</h3>
+	        <p>We deal with all companies and all types of cement.</p>	         
+	        <p>
+	            <a href = "#" class = "btn btn-primary" role = "button">
+	               Buy from us
+	            </a>    
+	        </p>	         
+	    	</div>
+		</div>
+	</div>
 	<div style="height: 2000px;"></div>
 {% endblock %}
