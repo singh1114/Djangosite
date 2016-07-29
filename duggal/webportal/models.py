@@ -5,17 +5,17 @@ from django.db import models
 
 # Create your models here.
 class Cement(models.Model):
-	Company_Name = models.CharField("Name of the Company", max_length = 30)
+	Company_Name = models.CharField("Name of the Company", max_length = 30, name="Company_Name")
 
 	pc_type = (
-		('OPC', 'OPC'),
-		('PPC', 'PPC'),
+		('0', 'OPC'),
+		('1', 'PPC'),
 	)
 
 	grade = (
-		('33', '33'),
-		('43', '43'),
-		('53', '53'),
+		('0', '33'),
+		('1', '43'),
+		('2', '53'),
 	)
 
 	Type_of_Cement = models.CharField(choices = pc_type, max_length = 9, default = "OPC")

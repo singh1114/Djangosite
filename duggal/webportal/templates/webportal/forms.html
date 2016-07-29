@@ -1,0 +1,9 @@
+{% extends 'webportal/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<h1>Form</h1>
+<form method="POST" action="output/">{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Create Post" name="">
+</form>
+{% endblock %}

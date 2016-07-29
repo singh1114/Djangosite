@@ -1,0 +1,41 @@
+{% extends 'webportal/base.html' %}
+{% load staticfiles %}
+{% block content %}
+	<div class="row" id="cementform">
+		<div class="col-md-8 col-md-offset-2">
+			<h1>Cement</h1><hr/>
+			<form action="" method="">
+				<div>
+					Company Name 
+					<select class="form-control">
+						{% for q in allcompanies %}
+							<option>{{ q.Company_Name }}</option>
+						{% endfor %}
+				    </select>
+				</div>
+				<div>
+					Type
+					<select class="form-control">
+						{%for q in pc_type %}
+					        <option>{{ q.1 }}</option>
+						{% endfor %}
+										
+				    </select>
+				</div>
+				<div>
+					Grade
+					<select class="form-control">
+						{% for q in grade %}
+							<option>{{ q.1 }}</option>
+						{% endfor %}
+				    </select>
+				</div>
+				<div>
+					Total number of bags
+					<input type="text" class="form-control">
+				</div>
+				<button class="btn btn-success">Calculate Price	</button>
+			</form>
+		</div>
+	</div>
+{% endblock %}
