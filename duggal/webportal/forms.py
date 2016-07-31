@@ -3,25 +3,26 @@ from .models import *
 
 
 class cementform(forms.Form):
-	grade = Cement.grade
-	#print(grade)
+	#Code to show all the dinstict companies name ass choices
+
 	distcompanyname = Cement.objects.order_by().values('Company_Name').distinct()
-	ids = Cement.objects.order_by().values('id').distinct()
-	#print(temp)
+	
 	companynametuple =()
 	tempvar1 = 0
 	for tempvar2 in distcompanyname:
-		companynametuple = ((ids[tempvar1]['id'], tempvar2['Company_Name']),) + companynametuple
+		companynametuple = ((tempvar2['Company_Name'], tempvar2['Company_Name']),) + companynametuple
 		tempvar1 = tempvar1 + 1
 
-	print(companynametuple)
-	
+	#code to write choices of types
+	Type = Cement.pc_type
 
-	#companies_name = companies_name.Company_Name
+	#code to write choices of grades
+	grade = Cement.grade
+
+	#code to create the real forms
 	company_name = forms.ChoiceField(choices=companynametuple)
-	Type = forms.CharField()
-	Grade = forms.CharField()
+	Type = forms.ChoiceField(choices=Type)
+	Grade = forms.ChoiceField(choices=grade)
 	bag_numbers = forms.IntegerField()
-	print(company_name)
 
 
