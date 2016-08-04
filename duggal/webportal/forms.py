@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from .views import *
 
 
 class cementform(forms.Form):
@@ -20,9 +21,12 @@ class cementform(forms.Form):
 	grade = Cement.grade
 
 	#code to create the real forms
-	company_name = forms.ChoiceField(choices=companynametuple)
+	company_Name = forms.ChoiceField(choices=companynametuple)
 	Type = forms.ChoiceField(choices=Type)
 	Grade = forms.ChoiceField(choices=grade)
-	bag_numbers = forms.IntegerField()
+	Number_of_Bags = forms.IntegerField()
+
+
+
 
 

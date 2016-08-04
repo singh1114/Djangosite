@@ -103,3 +103,10 @@ class CourseAggregate(models.Model):
 	def __str__(self):
 		return self.Place_of_course
 
+class cart(models.Model):
+	Item_Name = models.CharField(max_length = 15)
+	Quantity = models.CharField(max_length = 15)
+	Amount = models.CharField(max_length = 10)
+
+	def __str__(self):
+		return self.Item_Name

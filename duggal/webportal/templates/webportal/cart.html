@@ -1,0 +1,25 @@
+{% extends 'webportal/base.html' %}
+{% load staticfiles %}
+{% block content %}
+	<div class="row" id="cart">
+		<div class="col-md-10 col-md-offset-1" id="startform">
+		<table border="1px solid #34434d">
+		<tr>
+			
+				<th>Item Name</th>
+				<th>Quantity</th>
+				<th>Price</th>
+			
+			</tr>
+			{% for q in y %}
+				<tr>
+					<td>{{ q.Item_Name }}</td>
+					<td>{{ q.Quantity }}</td>
+					<td>{{ q.Amount }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+#startform p, #keepbold{
+	color: #34434D;
+	font-size: 20px;
+}
+#startform table{
+	border: 1px solid #34434D;
+	text-align: center;
+	width: 100%;
+}
+#startform tr, td, th{
+	color: #34434D;
+	text-align: center;
+
+}
