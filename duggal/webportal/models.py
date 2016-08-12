@@ -2,9 +2,12 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+# id field to add into every table..I am creating this field so that I can use this in the cart table(maybe).
+class Idishere(models.Model):
+	ids = models.AutoField(primary_key=True, blank=True, editable=False)
 
 # Create your models here.
-class Cement(models.Model):
+class Cement(Idishere):
 	Company_Name = models.CharField("Name of the Company", max_length = 30, name="Company_Name")
 
 	pc_type = (
@@ -27,7 +30,8 @@ class Cement(models.Model):
 	def __str__(self):
 		return self.Company_Name
 
-class BrickOrTile(models.Model):
+
+class BrickOrTile(Idishere):
 	grade_of_brick = (
 		('Grade I',' Grade I'),
 		('Grade II',' Grade II'),
@@ -50,7 +54,7 @@ class BrickOrTile(models.Model):
 	def __str__(self):
 		return self.Brand_of_Brick
 
-class WaterTanker(models.Model):
+class WaterTanker(Idishere):
 	capacity_of_tanker = (
 		('5000','5000'),
 		('10000','10000')
@@ -66,7 +70,7 @@ class WaterTanker(models.Model):
 		return self.Company_of_tanker
 
 
-class Sand(models.Model):
+class Sand(Idishere):
 	type_of_sand = (
 		('course','Course'),
 		('fine','Fine')
@@ -79,7 +83,7 @@ class Sand(models.Model):
 	def __str__(self):
 		return self.Type_of_Sand
 
-class CourseAggregate(models.Model):
+class CourseAggregate(Idishere):
 	place = (
 		('Anandpur_Sahib', 'Anandpur Sahib'),
 		('Pathankot', 'Pathankot'),
@@ -104,9 +108,9 @@ class CourseAggregate(models.Model):
 		return self.Place_of_course
 
 class cart(models.Model):
-	Item_Name = models.CharField(max_length = 15)
+	product_id = models.IntegerField()
 	Quantity = models.CharField(max_length = 15)
 	Amount = models.CharField(max_length = 10)
 
 	def __str__(self):
-		return self.Item_Name
+		return self.Quantity

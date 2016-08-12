@@ -4,6 +4,8 @@ from django.http import HttpResponse
 
 from .forms import cementform
 
+from pprint import pprint
+
 from .models import *
 # Create your views here.
 
@@ -28,12 +30,15 @@ def output(request):
 	for m in x:
 		z = m.Price_of_Cement
 
+	for f in x:
+		g = f.ids
+
 	#we can only return string as httpresponse so this is changed to string
 	totalprice = str(z*float(query4))
 	
 	request.session['quantity'] = query4
-	request.session['itemName'] = "Cement"
 	request.session['totalprice'] = totalprice
+	request.session['ids'] = g
 
 	context = {
 		"query1" : query1,
@@ -46,15 +51,46 @@ def output(request):
 	return render(request, "webportal/cementprice.html", context)
 
 def input(request):
-	itemName = request.session.get('itemName')
+	# get all the session variables into some local variables
 	quantity = request.session.get('quantity')
 	totalprice = request.session.get('totalprice')
-	x = cart(Item_Name=itemName, Quantity=quantity, Amount=totalprice)
+	ids = request.session.get('ids')
+
+	# Put them into the cart model/database
+	x = cart(product_id=ids, Quantity=quantity, Amount=totalprice)
 	x.save()
-	y = cart.objects.all()
-	
+
+	d = 0
+	f = cart.objects.all()
+	w = []
+	for a in f:
+		b = a.product_id
+		#print(b)
+		w.insert(d, Cement.objects.filter(ids=b))
+		d = d+1
+
+
+	d = 0
+	r = {}
+	f = []
+	#values = []
+	#s = {}
+	for e in w:
+		r.update(vars(e[0]))
+		f.insert(d, r)
+		#values.insert(d,r[d].values())
+		#s["items"] = vars(e[0])
+		#s["values"] = r[d].values()
+		#s.update(s)
+		#s = s + {"items":vars(e[0]), "values":r[d].values()}
+		d = d+1
+
+	print(r)	
+	#print(s)
+	#print(r[0].values())
 	context = {
-		"y": y,
+		'f': f,
+		#'values': values
 	}	
 	#return HttpResponse(z+" "+itemName+" "+quantity+" "+totalprice)
 	return render(request, "webportal/cart.html", context)
