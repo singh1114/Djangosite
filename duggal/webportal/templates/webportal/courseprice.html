@@ -1,0 +1,12 @@
+{% extends 'webportal/base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="row" id="formspage">
+	<div class="col-md-10 col-md-offset-1" id="startform">
+		<p> The total price of the selected item is equal to <strong><span id="keepbold">{{ totalprice }}</span></strong></p>
+		<a href="/product/course/cart.html"><button class="btn btn-success" type="button">Add to cart</button></a>
+	</div>
+</div>
+
+{% endblock %}

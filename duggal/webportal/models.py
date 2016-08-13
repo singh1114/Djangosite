@@ -94,14 +94,13 @@ class CourseAggregate(Idishere):
 		('30', '30 mm'),
 	)
 	amount = (
-		('100', '100 foot cube'),
-		('250', '250 foot cube'),
-		('1000', '1000 foot cube'),
+		('100', '100 cubic foot'),
+		('250', '250 cubic foot'),
+		('1000', '1000 cubic foot'),
 	)
 	Place_of_course = models.CharField("Place of Import", choices = place, max_length = 15)
 	Size_of_course = models.CharField("Size of course", choices = size, max_length = 5)
 	Amount_of_course = models.CharField("Choose a unit", choices = amount, max_length = 15)
-
 	Price_of_Course = models.FloatField("Price of Course", default = 200)
 	
 	def __str__(self):
