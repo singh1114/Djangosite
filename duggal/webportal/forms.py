@@ -10,8 +10,8 @@ class creatingtuple:
 	  	self.fieldname = fieldname
 
 	def onefunction(self):
-		Cementq = self.modelname
-		distcompanyname = Cementq.objects.order_by().values(self.fieldname).distinct()	
+		thismodel = self.modelname
+		distcompanyname = thismodel.objects.order_by().values(self.fieldname).distinct()	
 		companynametuple =()
 		tempvar1 = 0
 		for tempvar2 in distcompanyname:
@@ -28,7 +28,7 @@ class cementform(forms.Form):
 	pro = creatingtuple(modelname, fieldname)
 
 	#code to create the real forms
-	company_Name = forms.ChoiceField(choices=pro.onefunction())
+	Company_Name = forms.ChoiceField(choices=pro.onefunction())
 	Type = forms.ChoiceField(choices=Cement.pc_type)
 	Grade = forms.ChoiceField(choices=Cement.grade)
 	Total_Quantity = forms.IntegerField()
@@ -37,7 +37,7 @@ class courseform(forms.Form):
 	# creating form and choices, show them in forms
 	Place_of_Import = forms.ChoiceField(choices=CourseAggregate.place)
 	Size_of_Course = forms.ChoiceField(choices=CourseAggregate.size)
-	Quantity_of__Course = forms.ChoiceField(choices=CourseAggregate.amount)
+	Quantity_of_Course = forms.ChoiceField(choices=CourseAggregate.amount)
 	Total_Quantity = forms.IntegerField()
 
 class brickform(forms.Form):
@@ -61,7 +61,5 @@ class tankerform(forms.Form):
 
 class sandform(forms.Form):
 	# creating form and choices, show them in forms
-	Place_of_Import = forms.ChoiceField(choices=CourseAggregate.place)
-	Size_of_Course = forms.ChoiceField(choices=CourseAggregate.size)
-	Quantity_of__Course = forms.ChoiceField(choices=CourseAggregate.amount)
+	Type_of_sand = forms.ChoiceField(choices=Sand.type_of_sand)
 	Total_Quantity = forms.IntegerField()

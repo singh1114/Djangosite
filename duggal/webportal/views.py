@@ -39,15 +39,253 @@ def product(request, product_name):
 		p_name = "Water Tankers"
 
 	# else if the user want to buy Water Tankers
-	elif(product_name=="paints"):
-		form = paintsform(request.POST or None)
-		p_name = "Paints and Hardware"
+	#elif(product_name=="paints"):
+	#	form = paintsform(request.POST or None)
+	#	p_name = "Paints and Hardware"
+	else:
+		return HttpResponse(" there is no such thing")
 
 	context = {
 		"form" : form,
 		"p_name": p_name
 	}
 	return render(request, "webportal/productform.html", context)
+
+def price(request, product_name):
+	if(product_name == "cement"):
+		# Putting the forms data into variables 
+		#result of queries
+		resquery1 = request.POST.get('Company_Name')
+		resquery2 = request.POST.get('Type')
+		resquery3 = request.POST.get('Grade')
+
+		# This needs to be passed as a context
+		queries = {
+			'Company Name': resquery1,
+			'Type of Cement': resquery2, 
+			'Grade of Cement': resquery3,
+		}
+
+		# Query filteration 
+		x = Cement.objects.filter(Company_Name = resquery1, Type_of_Cement = resquery2, Grade_of_Cement = resquery3)
+
+	elif(product_name == "course"):
+		# Putting the course aggregate forms data into variables 
+		
+		#result of queries
+		resquery1 = request.POST.get('Place_of_Import')
+		resquery2 = request.POST.get('Size_of_Course')
+		resquery3 = request.POST.get('Quantity_of_Course')
+
+		# This needs to be passed as a context
+		queries = {
+			'Place of Import': resquery1,
+			'Size of course': resquery2, 
+			'Quantity of Course': resquery3,
+		}
+
+		# Query filteration 
+		x = CourseAggregate.objects.filter(Place_of_course = resquery1, Size_of_course = resquery2, Amount_of_course = resquery3)
+
+	elif(product_name == "brick"):
+		# Putting the course aggregate forms data into variables 
+		
+		#result of queries
+		resquery1 = request.POST.get('Companies_Available')
+		resquery2 = request.POST.get('Brick_or_Tile')
+		resquery3 = request.POST.get('Grade')
+
+		# These needs to be passed as a context
+		queries = {
+			'Companies Available': resquery1,
+			'Brick or Tile': resquery2, 
+			'Grade of Brick/Tile': resquery3,
+		}
+
+		# Query filteration 
+		x = BrickOrTile.objects.filter(Brand_of_Brick = resquery1, Brick_or_Tiles = resquery2, Grade_of_Brick = resquery3)
+
+	elif(product_name == "tanker"):
+		# Putting the course aggregate forms data into variables 
+		
+		#result of queries
+		resquery1 = request.POST.get('Company_of_tanker')
+		resquery2 = request.POST.get('Capacity_of_tanker')
+
+		# These needs to be passed as a context
+		queries = {
+			'Company Name': resquery1,
+			'Capacity of Tanker': resquery2, 
+		}
+
+		# Query filteration 
+		x = WaterTanker.objects.filter(Company_of_tanker = resquery1, Capacity_of_Tanker = resquery2)
+
+	elif(product_name == "sand"):
+		# Putting the course aggregate forms data into variables 
+		
+		#result of queries
+		resquery1 = request.POST.get('Type_of_sand')
+
+		# These needs to be passed as a context
+		queries = {
+			'Type of Sand': resquery1, 
+		}
+
+		# Query filteration 
+		x = Sand.objects.filter(Type_of_Sand = resquery1)
+
+	else:
+		return HttpResponse("No such Item present")
+
+	resquery4 = request.POST.get('Total_Quantity')
+	
+	for tempobject in x:
+		modelprice = tempobject.Price
+		modelid = int(tempobject.ids)
+
+	print(modelid)
+	totalprice = str(modelprice*float(resquery4))
+
+	#update the resquery to finalize the changes
+	queries.update({'Quantity': resquery4})
+
+	context = {
+		"totalprice": totalprice,
+		"p_name": product_name,
+		'queries': queries,
+	}
+
+	# It's time to add a field to the cart model
+	#print(Cart)
+	addfield = Cart(product_id=modelid, product_name=product_name, Quantity=resquery4, Amount=totalprice)
+	addfield.save()
+
+	# At the end return the response
+	return render(request, "webportal/price.html", context)
+
+def cart(request):
+
+	# All the products will stay in this dictionary
+	allproducts = {}
+	productList = []
+
+	# Put all the data in Cart model into a variable
+	cart = Cart.objects.all()
+
+	# Now loop through each item in the cart
+	for cartitem in cart:
+
+		p_name = cartitem.product_name
+		p_id = cartitem.product_id
+
+		if(p_name == "cement"):
+			# Go on and search the item in the cement model
+			searchtable = Cement.objects.filter(ids = p_id)
+
+			for singlerow in searchtable:
+				# Now create variables using seartable
+				company_name = singlerow.Company_Name
+				type_of_cement = singlerow.Type_of_Cement
+				grade_of_cement = singlerow.Grade_of_Cement
+				single_item_price = singlerow.Price
+
+				# Now create a dictionary that can be passed to the HTML to show
+				productData = {
+					'Company Name': company_name,
+					'Type of Cement': type_of_cement, 
+					'Grade of Cement': grade_of_cement,
+					'Price of Single Item': single_item_price,
+				}
+
+		elif(p_name == "course"):
+
+			# Do the same as done in the if statment
+			searchtable = CourseAggregate.objects.filter(ids = p_id)
+
+			for singlerow in searchtable:
+				place_of_import = singlerow.Place_of_course
+				size_of_course = singlerow.Size_of_course
+				amount_of_course = singlerow.Amount_of_course
+				single_item_price = singlerow.Price
+
+				productData = {
+					'Place of Import': place_of_import,
+					'Size of course': size_of_course, 
+					'Quantity of Course': amount_of_course,
+					'Price of Single Item': single_item_price,
+				}
+
+		elif(p_name == "brick"):
+
+			searchtable = BrickOrTile.objects.filter(ids = p_id)
+
+			for singlerow in searchtable:
+				company_name = singlerow.Brand_of_Brick
+				type_of_brick = singlerow.Brick_or_Tiles
+				grade_of_brick = singlerow.Grade_of_Brick
+				single_item_price = singlerow.Price
+
+				productData = {
+					'Company Name': company_name,
+					'Type of Cement': type_of_brick, 
+					'Grade of Cement': grade_of_brick,
+					'Price of Single Item': single_item_price,
+				}
+
+		elif(p_name == "tanker"):
+
+			searchtable = WaterTanker.objects.filter(ids = p_id)
+
+			for singlerow in searchtable:
+				company_name = singlerow.Company_of_tanker
+				type_of_brick = singlerow.Capacity_of_Tanker
+				single_item_price = singlerow.Price
+
+				productData = {
+					'Company Name': company_name,
+					'Type of Cement': type_of_brick, 
+					'Price of Single Item': single_item_price,
+				}
+
+		elif(p_name == "sand"):
+
+			searchtable = Sand.objects.filter(ids = p_id)
+
+			for singlerow in searchtable:
+				type_of_sand = singlerow.Type_of_Sand
+				single_item_price = singlerow.Price
+
+				productData = {
+					'Company Name': company_name, 
+					'Price of Single Item': single_item_price,
+				}
+		else:
+			print("Nothing found")
+
+		# Update all products dictionary
+		allproducts.update({'Products': productData})
+		#print(allproducts)
+
+		for value in allproducts.items():
+			productList.extend(value)
+		
+	print(productList)
+	context = {
+		'productList': productList,
+	}
+
+	return render(request, "webportal/cart.html", context) 
+
+
+
+#code below this is bad... and not going to be their finally but keep this as reference.
+#code below this is bad... and not going to be their finally but keep this as reference.
+#code below this is bad... and not going to be their finally but keep this as reference.
+#code below this is bad... and not going to be their finally but keep this as reference.
+#code below this is bad... and not going to be their finally but keep this as reference.
+#code below this is bad... and not going to be their finally but keep this as reference.
+#code below this is bad... and not going to be their finally but keep this as reference.
 
 def output(request):
 	query1 = request.POST.get('company_Name')
@@ -181,8 +419,3 @@ def inputcourse(request):
 		'f': f,
 	}	
 	return render(request, "webportal/cart.html", context)
-
-
-
-#def bekaar(request, p_id):
-	#return HttpResponse("That is very fine dick %s" %p_id)

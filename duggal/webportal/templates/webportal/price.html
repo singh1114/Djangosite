@@ -1,0 +1,18 @@
+{% extends 'webportal/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="row" id="formspage">
+	<div class="col-md-10 col-md-offset-1" id="startform" style="border: 1px solid black;">
+		{%for key,value in queries.items%}
+			<div class="col-md-5 col-md-offset-1" >
+				<h3 style="color:black;">{{key}}</h3>
+			</div>
+			<div class="col-md-5 col-md-offset-1">
+				<h3 style="color:black;">{{value}}</h3>
+			</div>
+		{%endfor%}<br/>
+		<div class="col-md-offset-1"><h4 style="color:black; margin-top:40px;">For this {{p_name}} the total payable price is {{totalprice}}</h4></div>
+		<a href="/cart"><button class="btn btn-success" type="button">Add to cart</button></a>
+	</div>
+</div>
+{% endblock %}
