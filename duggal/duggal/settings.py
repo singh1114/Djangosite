@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'webportal', 
-    
+    'webportal',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -133,7 +133,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#for login 
+#for login
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 
@@ -142,3 +142,6 @@ AUTHENTICATION_BACKENDS = (
 
 # for site ID
 SITE_ID = 1
+
+# To redirect after login
+LOGIN_REDIRECT_URL = '/cart/'

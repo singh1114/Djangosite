@@ -1,0 +1,44 @@
+{% extends 'webportal/base.html' %}
+{% load staticfiles %}
+{% block content %}
+	<div class="row" id="cart">
+		<div class="col-md-3 col-md-offset-8" id="startform">
+			Sign In with :
+      <a href="/accounts/google/login/?process=login">
+        <button type="button" name="google" class="btn btn-danger" style="width:100%">
+          Google
+        </button><br/>
+      </a>
+      <a href="/accounts/facebook/login/?process=login">
+        <button type="button" name="facebook" class="btn btn-primary" style="width:100%">
+          Facebook
+        </button>
+      </a>
+      <a href="/accounts/linkedin/login/?process=login">
+        <button type="button" name="linkedin" class="btn btn-warning" style="width:100%">
+          LinkedIn
+        </button>
+      </a>
+			<hr/>
+       <script id="allauth-facebook-settings" type="application/json">
+       {"cancelUrl": "http://127.0.0.1:8000/accounts/social/login/cancelled/", "loginByTokenUrl": "http://127.0.0.1:8000/accounts/facebook/login/token/", "version": "v2.4", "logoutUrl": "http://127.0.0.1:8000/accounts/logout/", "loginOptions": {"scope": ""}, "appId": "1751281555152589", "locale": "en_US", "loginUrl": "http://127.0.0.1:8000/accounts/facebook/login/", "csrfToken": "yEwvlqKd7Y3vSJO5p47Ivt0BjaE67U8i", "errorUrl": "http://127.0.0.1:8000/accounts/social/login/error/"}
+       </script>
+       <script type="text/javascript" src="/static/facebook/js/fbconnect.js"></script>
+
+     <form class="login" method="POST" action="/accounts/login/">
+       <input type='hidden' name='csrfmiddlewaretoken' value='yEwvlqKd7Y3vSJO5p47Ivt0BjaE67U8i' />
+       <p style="font-size:18px;"><input autofocus="autofocus" id="id_login" maxlength="30" name="login" placeholder="Username" type="text" class="form-control"/></p>
+     <p style="font-size:18px;"><input id="id_password" name="password" placeholder="Password" type="password" class="form-control"/></p>
+       <a class="button secondaryAction" href="/accounts/password/reset/">Forgot Password?</a>
+       <button   type="submit" class="btn btn-success" style="width:100%;">Sign In</button>
+     </form>
+		 <hr/>
+		 Sign up using your email :
+		 <a href="/accounts/signup">
+		 <button type="button" class="btn btn-warning" style="width:100%;">Sign Up</button>
+	 		</a>
+
+		</div>
+	</div>
+
+{% endblock %}

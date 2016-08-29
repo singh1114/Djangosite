@@ -3,11 +3,17 @@
 {% block content %}
 	<div class="row" id="cart">
 		<div class="col-md-10 col-md-offset-1" id="startform">
-			{% for allproducts in productList %}
-				{% for key,value in allproducts.items %}
-					{{key}}--------{{value}}<br/>
-				{% endfor %}<hr/>
-			{% endfor %}
+			{% if user.is_authenticated %}
+				{% for allproducts in productList %}
+				 {% for key,value in allproducts.items %}
+					 {{key}}--------{{value}}<br/>
+				 {% endfor %}<hr/>
+			 	{% endfor %}
+			{% else %}
+				<p>
+					You need to be logged in to watch that.
+				</p>
+	 	 	{% endif %}
 		</div>
 	</div>
 

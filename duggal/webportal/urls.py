@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^product/(?P<product_name>[a-z]+)/$', views.product, name = "product"),
     url(r'^product/(?P<product_name>[a-z]+)/price/$', views.price, name = "price"),
     url(r'^cart/$', views.cart, name = "cart"),
+
+    # URL for login page.
+    url(r'^accounts/login/$', views.login, name = "login"),
 ]

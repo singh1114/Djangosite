@@ -53,7 +53,7 @@ def product(request, product_name):
 
 def price(request, product_name):
 	if(product_name == "cement"):
-		# Putting the forms data into variables 
+		# Putting the forms data into variables
 		#result of queries
 		resquery1 = request.POST.get('Company_Name')
 		resquery2 = request.POST.get('Type')
@@ -62,16 +62,16 @@ def price(request, product_name):
 		# This needs to be passed as a context
 		queries = {
 			'Company Name': resquery1,
-			'Type of Cement': resquery2, 
+			'Type of Cement': resquery2,
 			'Grade of Cement': resquery3,
 		}
 
-		# Query filteration 
+		# Query filteration
 		x = Cement.objects.filter(Company_Name = resquery1, Type_of_Cement = resquery2, Grade_of_Cement = resquery3)
 
 	elif(product_name == "course"):
-		# Putting the course aggregate forms data into variables 
-		
+		# Putting the course aggregate forms data into variables
+
 		#result of queries
 		resquery1 = request.POST.get('Place_of_Import')
 		resquery2 = request.POST.get('Size_of_Course')
@@ -80,16 +80,16 @@ def price(request, product_name):
 		# This needs to be passed as a context
 		queries = {
 			'Place of Import': resquery1,
-			'Size of course': resquery2, 
+			'Size of course': resquery2,
 			'Quantity of Course': resquery3,
 		}
 
-		# Query filteration 
+		# Query filteration
 		x = CourseAggregate.objects.filter(Place_of_course = resquery1, Size_of_course = resquery2, Amount_of_course = resquery3)
 
 	elif(product_name == "brick"):
-		# Putting the course aggregate forms data into variables 
-		
+		# Putting the course aggregate forms data into variables
+
 		#result of queries
 		resquery1 = request.POST.get('Companies_Available')
 		resquery2 = request.POST.get('Brick_or_Tile')
@@ -98,16 +98,16 @@ def price(request, product_name):
 		# These needs to be passed as a context
 		queries = {
 			'Companies Available': resquery1,
-			'Brick or Tile': resquery2, 
+			'Brick or Tile': resquery2,
 			'Grade of Brick/Tile': resquery3,
 		}
 
-		# Query filteration 
+		# Query filteration
 		x = BrickOrTile.objects.filter(Brand_of_Brick = resquery1, Brick_or_Tiles = resquery2, Grade_of_Brick = resquery3)
 
 	elif(product_name == "tanker"):
-		# Putting the course aggregate forms data into variables 
-		
+		# Putting the course aggregate forms data into variables
+
 		#result of queries
 		resquery1 = request.POST.get('Company_of_tanker')
 		resquery2 = request.POST.get('Capacity_of_tanker')
@@ -115,69 +115,86 @@ def price(request, product_name):
 		# These needs to be passed as a context
 		queries = {
 			'Company Name': resquery1,
-			'Capacity of Tanker': resquery2, 
+			'Capacity of Tanker': resquery2,
 		}
 
-		# Query filteration 
+		# Query filteration
 		x = WaterTanker.objects.filter(Company_of_tanker = resquery1, Capacity_of_Tanker = resquery2)
 
 	elif(product_name == "sand"):
-		# Putting the course aggregate forms data into variables 
-		
+		# Putting the course aggregate forms data into variables
+
 		#result of queries
 		resquery1 = request.POST.get('Type_of_sand')
 
 		# These needs to be passed as a context
 		queries = {
-			'Type of Sand': resquery1, 
+			'Type of Sand': resquery1,
 		}
 
-		# Query filteration 
+		# Query filteration
 		x = Sand.objects.filter(Type_of_Sand = resquery1)
 
 	else:
 		return HttpResponse("No such Item present")
 
 	resquery4 = request.POST.get('Total_Quantity')
-	
+
 	for tempobject in x:
 		modelprice = tempobject.Price
 		modelid = int(tempobject.ids)
 
-	print(modelid)
 	totalprice = str(modelprice*float(resquery4))
-
-	#update the resquery to finalize the changes
-	queries.update({'Quantity': resquery4})
 
 	context = {
 		"totalprice": totalprice,
 		"p_name": product_name,
+		"modelid": modelid,
+		'quantity': resquery4,
 		'queries': queries,
 	}
 
-	# It's time to add a field to the cart model
-	#print(Cart)
-	addfield = Cart(product_id=modelid, product_name=product_name, Quantity=resquery4, Amount=totalprice)
-	addfield.save()
+	request.session['totalprice'] = totalprice
+	request.session['p_name'] = product_name
+	request.session['modelid'] = modelid
+	request.session['Amount'] = resquery4
 
 	# At the end return the response
 	return render(request, "webportal/price.html", context)
 
 def cart(request):
 
+	# Let's put the session variables into a variable.
+	modelid = request.session.get('modelid')
+	product_name = request.session.get('p_name')
+	quantity = request.session.get('Amount')
+	totalprice = request.session.get('totalprice')
+	userName = request.user.username
+
+	# It's time to add a field to the cart model
+	if(modelid != None and userName != None):
+		addfield = Cart(product_id=modelid, product_name=product_name, Quantity=quantity, Amount=totalprice, userName = userName)
+		addfield.save()
+		# Now delete the session variables.
+		del request.session['modelid']
+		del request.session['p_name']
+		del request.session['Amount']
+		del request.session['totalprice']
+
 	# All the products will stay in this dictionary
 	allproducts = {}
 	productList = []
 
 	# Put all the data in Cart model into a variable
-	cart = Cart.objects.all()
+	cart = Cart.objects.filter(userName = userName)
 
 	# Now loop through each item in the cart
 	for cartitem in cart:
 
 		p_name = cartitem.product_name
 		p_id = cartitem.product_id
+		p_totalprice = cartitem.Amount
+		p_quantity = cartitem.Quantity
 
 		if(p_name == "cement"):
 			# Go on and search the item in the cement model
@@ -193,7 +210,7 @@ def cart(request):
 				# Now create a dictionary that can be passed to the HTML to show
 				productData = {
 					'Company Name': company_name,
-					'Type of Cement': type_of_cement, 
+					'Type of Cement': type_of_cement,
 					'Grade of Cement': grade_of_cement,
 					'Price of Single Item': single_item_price,
 				}
@@ -211,7 +228,7 @@ def cart(request):
 
 				productData = {
 					'Place of Import': place_of_import,
-					'Size of course': size_of_course, 
+					'Size of course': size_of_course,
 					'Quantity of Course': amount_of_course,
 					'Price of Single Item': single_item_price,
 				}
@@ -228,7 +245,7 @@ def cart(request):
 
 				productData = {
 					'Company Name': company_name,
-					'Type of Cement': type_of_brick, 
+					'Type of Cement': type_of_brick,
 					'Grade of Cement': grade_of_brick,
 					'Price of Single Item': single_item_price,
 				}
@@ -244,7 +261,7 @@ def cart(request):
 
 				productData = {
 					'Company Name': company_name,
-					'Type of Cement': type_of_brick, 
+					'Type of Cement': type_of_brick,
 					'Price of Single Item': single_item_price,
 				}
 
@@ -257,25 +274,48 @@ def cart(request):
 				single_item_price = singlerow.Price
 
 				productData = {
-					'Company Name': company_name, 
+					'Company Name': company_name,
 					'Price of Single Item': single_item_price,
 				}
 		else:
 			print("Nothing found")
 
+		# Update products data dictionary
+		productData.update({'totalprice': p_totalprice})
+		productData.update({'Amount': p_quantity})
+
 		# Update all products dictionary
 		allproducts.update({'Products': productData})
-		#print(allproducts)
 
 		for value in allproducts.items():
 			productList.extend(value)
-		
-	print(productList)
+
+
+
 	context = {
 		'productList': productList,
 	}
 
-	return render(request, "webportal/cart.html", context) 
+	return render(request, "webportal/cart.html", context)
+
+# Now I will code for the social authentication features in the app.
+def login(request):
+    return render(request, "webportal/login.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -293,7 +333,7 @@ def output(request):
 	query3 = request.POST.get('Grade')
 	query4 = request.POST.get('Total_Quantity')
 	x = Cement.objects.filter(Company_Name = query1, Type_of_Cement = query2, Grade_of_Cement = query3)
-	
+
 	for m in x:
 		z = m.Price_of_Cement
 
@@ -302,7 +342,7 @@ def output(request):
 
 	#we can only return string as httpresponse so this is changed to string
 	totalprice = str(z*float(query4))
-	
+
 	request.session['quantity'] = query4
 	request.session['totalprice'] = totalprice
 	request.session['ids'] = g
@@ -322,16 +362,18 @@ def input(request):
 	quantity = request.session.get('quantity')
 	totalprice = request.session.get('totalprice')
 	ids = request.session.get('ids')
+    #request.session.pop('quantity', None)
+    #request.session.modified = True
 
 	# Put them into the cart model/database
 	x = cart(product_id=ids, Quantity=quantity, Amount=totalprice)
 	x.save()
-	
+
 	# temp variable d will be used for the looping process
 	d = 0
 	# f will contain all the things in the cart.
 	f = cart.objects.all()
-	w = [] # list w will contain correspoding values from cement model. 
+	w = [] # list w will contain correspoding values from cement model.
 	for a in f:
 		# b will store all the ids in the cart in iteration
 		b = a.product_id
@@ -343,13 +385,13 @@ def input(request):
 	f = []
 	for e in w:
 		r = vars(e[0])
-		print(r)		
+		print(r)
 		f.insert(d, r)
 		d = d+1
 
 	context = {
 		'f': f,
-	}	
+	}
 	return render(request, "webportal/cart.html", context)
 
 # views for course aggregate
@@ -361,7 +403,7 @@ def courseprice(request):
 	query3 = request.POST.get('Quantity_of__Course')
 	query4 = request.POST.get('Total_Quantity')
 	x = CourseAggregate.objects.filter(Place_of_course = query1, Size_of_course = query2, Amount_of_course = query3)
-	
+
 	for m in x:
 		z = m.Price_of_Course
 
@@ -370,7 +412,7 @@ def courseprice(request):
 
 	#we can only return string as httpresponse so this is changed to string
 	totalprice = str(z*float(query4))
-	
+
 	request.session['quantity'] = query4
 	request.session['totalprice'] = totalprice
 	request.session['ids'] = g
@@ -394,12 +436,12 @@ def inputcourse(request):
 	# Put them into the cart model/database
 	x = cart(product_id=ids, Quantity=quantity, Amount=totalprice)
 	x.save()
-	
+
 	# temp variable d will be used for the looping process
 	d = 0
 	# f will contain all the things in the cart.
 	f = cart.objects.all()
-	w = [] # list w will contain correspoding values from cement model. 
+	w = [] # list w will contain correspoding values from cement model.
 	for a in f:
 		# b will store all the ids in the cart in iteration
 		b = a.product_id
@@ -411,11 +453,11 @@ def inputcourse(request):
 	f = []
 	for e in w:
 		r = vars(e[0])
-		print(r)		
+		print(r)
 		f.insert(d, r)
 		d = d+1
 
 	context = {
 		'f': f,
-	}	
+	}
 	return render(request, "webportal/cart.html", context)

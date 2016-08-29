@@ -102,7 +102,7 @@ class CourseAggregate(Idishere):
 	Size_of_course = models.CharField("Size of course", choices = size, max_length = 10)
 	Amount_of_course = models.CharField("Choose a unit", choices = amount, max_length = 15)
 	Price = models.FloatField("Price of Course", default = 200)
-	
+
 	def __str__(self):
 		return self.Place_of_course
 
@@ -111,6 +111,7 @@ class Cart(models.Model):
 	product_name = models.CharField(max_length = 30)
 	Quantity = models.CharField(max_length = 15)
 	Amount = models.CharField(max_length = 10)
+	userName = models.CharField(max_length = 30)
 
 	def __str__(self):
 		return self.Quantity
