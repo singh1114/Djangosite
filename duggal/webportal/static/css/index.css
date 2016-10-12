@@ -3,8 +3,22 @@
 	height: 100vh;
 }
 #main-tagline{
-	background: rgba(5,5,5,0.8);
 	margin-top: -60vh;
+}
+#main-tagline button{
+	width: 150px;
+	height: 45px;
+	border-radius: 0px;
+}
+#main-tagline button strong{
+	font-size: 20px;
+}
+
+#main-tagline #login{
+	margin-left: -75px;
+}
+#main-tagline #signup{
+	margin-left: 75px;
 }
 #all-products{
 	text-align: center;

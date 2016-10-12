@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,6 +25,24 @@ SECRET_KEY = '4@4%23v1*!=t!$n5(n9&oh&66s(_m4hqtdfltxw3v+)=+22kcb'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+
+###### For e-mail configuration ###########################################
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Host for sending e-mail.
+EMAIL_HOST = 'smtp.gmail.com'
+
+# Port for sending e-mail.
+EMAIL_PORT = 587
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = 'ranvir.singh1114@gmail.com'
+EMAIL_HOST_PASSWORD = '******'
+EMAIL_USE_TLS = True
+
+###### For e-mail configuration #####################################
 
 
 # Application definition
@@ -46,6 +63,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.linkedin',
+    'parsley',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -87,7 +105,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'duggalwebportal',
-	'USER': 'ranvir',
+	'USER': 'root',
 	'PASSWORD': 'Ranvirsingh',
 	'HOST': 'localhost',
 	'PORT': '',

@@ -3,7 +3,20 @@
 {% block content %}
 	<img src="{% static 'images/construction.jpg' %}" id="main-image">
 	<div class="col-md-6 col-md-offset-3" id="main-tagline">
-		<h1><strong>We will help you to Build it for you!</strong></h1>
+		<h1>
+			{% if user.is_authenticated %}
+				<a href = "/accounts/logout">
+				<button class="btn btn-danger"><strong>Logout</strong></button>
+				</a>
+			{% else %}
+				<a href = "/accounts/login">
+				<button class="btn btn-danger" id="login"><strong>Login</strong></button>
+				</a>
+				<a href = "/accounts/login">
+				<button class="btn btn-success" id="signup"><strong>sign up</strong></button>
+				</a>
+			{% endif %}
+		</h1>
 	</div>
 	<div class="container" id="all-products">
 		<a name="product"></a>
@@ -38,7 +51,7 @@
 		</div>
 		<div class = "col-sm-6 col-md-3" id="product">
 	        <div class = "thumbnail">
-	        	<img src = "{% static 'images/cement.jpg' %}" alt = "Generic placeholder thumbnail">
+	        	<img src = "{% static 'images/sand.jpg' %}" alt = "Generic placeholder thumbnail">
 	        </div>
 	        <div class = "caption">
 	        <h3>Sand</h3>

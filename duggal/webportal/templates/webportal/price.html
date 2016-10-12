@@ -5,13 +5,20 @@
 	<div class="col-md-10 col-md-offset-1" id="startform" style="border: 1px solid black;">
 		{%for key,value in queries.items%}
 			<div class="col-md-5 col-md-offset-1" >
-				<h3 style="color:black;">{{key}}</h3>
+				<h4 style="color:black;">{{key}}</h4>
 			</div>
 			<div class="col-md-5 col-md-offset-1">
-				<h3 style="color:black;">{{value}}</h3>
+				<h4 style="color:black;">{{value}}</h4>
 			</div>
-		{%endfor%}<br/>
-		<div class="col-md-offset-1"><h4 style="color:black; margin-top:40px;">For this {{p_name}} the total payable price is {{totalprice}}</h4></div>
+		{%endfor%}
+			<div class="col-md-5 col-md-offset-1" >
+				<h4 style="color:black;">Total Quantity</h4>
+			</div>
+			<div class="col-md-5 col-md-offset-1">
+				<h4 style="color:black;">{{quantity}}</h4>
+			</div>
+		<div class="col-md-12" style="height:20px;"></div>
+		<div class="col-md-offset-2"><h3 style="color:black; padding-top:100px;">For this {{p_name}} the total payable price is {{totalprice}}</h3></div>
 		<a href="/cart"><button class="btn btn-success" type="button">Add to cart</button></a>
 	</div>
 </div>

@@ -1,4 +1,10 @@
-from django.conf.urls import patterns, include, url
+
+
+# This two if you want to enable the Django Admin: (recommended)
+from django.contrib import admin
+admin.autodiscover()
+
+from django.conf.urls import include, url
 from . import views
 
 urlpatterns = [
@@ -23,6 +29,7 @@ urlpatterns = [
     url(r'^product/(?P<product_name>[a-z]+)/$', views.product, name = "product"),
     url(r'^product/(?P<product_name>[a-z]+)/price/$', views.price, name = "price"),
     url(r'^cart/$', views.cart, name = "cart"),
+    url(r'^noway/$', views.sendMail, name = "mail"),
 
     # URL for login page.
     url(r'^accounts/login/$', views.login, name = "login"),

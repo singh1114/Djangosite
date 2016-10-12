@@ -5,6 +5,10 @@ from django.http import HttpResponse
 from .forms import *
 
 from .models import *
+
+# For sending Email
+from django.core.mail import send_mail
+
 # Create your views here.
 
 # This is the simplest view for index.html page
@@ -88,7 +92,7 @@ def price(request, product_name):
 		x = CourseAggregate.objects.filter(Place_of_course = resquery1, Size_of_course = resquery2, Amount_of_course = resquery3)
 
 	elif(product_name == "brick"):
-		# Putting the course aggregate forms data into variables
+		# Putting the Brick forms data into variables
 
 		#result of queries
 		resquery1 = request.POST.get('Companies_Available')
@@ -172,7 +176,7 @@ def cart(request):
 	userName = request.user.username
 
 	# It's time to add a field to the cart model
-	if(modelid != None and userName != None):
+	if(modelid != None and userName != ""):
 		addfield = Cart(product_id=modelid, product_name=product_name, Quantity=quantity, Amount=totalprice, userName = userName)
 		addfield.save()
 		# Now delete the session variables.
@@ -281,6 +285,7 @@ def cart(request):
 			print("Nothing found")
 
 		# Update products data dictionary
+		productData.update({'Product': p_name})
 		productData.update({'totalprice': p_totalprice})
 		productData.update({'Amount': p_quantity})
 
@@ -290,11 +295,16 @@ def cart(request):
 		for value in allproducts.items():
 			productList.extend(value)
 
+	form = checkoutcart(request.POST or None)
 
+	request.session['sendcart'] = productList
+	request.session['username'] = userName
 
 	context = {
+        'form' : form,
 		'productList': productList,
 	}
+
 
 	return render(request, "webportal/cart.html", context)
 
@@ -302,7 +312,46 @@ def cart(request):
 def login(request):
     return render(request, "webportal/login.html")
 
+# Here is the code to checkout from the cart. That is to send the mail of the
+# cart.
 
+def sendMail(request):
+
+    Name = request.POST.get('Name')
+    Email = request.POST.get('Email')
+    Address = request.POST.get('Address')
+    Phone_number = request.POST.get('Phone_number')
+    custom_msg = request.POST.get('custom_msg')
+
+    message = ''
+    chrome = []
+
+    sendcart = request.session.get('sendcart')
+    
+    c = 0
+    a = 0
+    for allproducts in sendcart:
+    	c = c + 1
+    	if(c%2 != 0):
+    		continue
+    	chrome.insert(a, allproducts)
+    	a = a + 1
+    	for somechrome in chrome:
+    		for key, value in somechrome.items():
+    			message = message + str(key) + '---------' + str(value) + '\n'
+    		message = message + '\n'
+
+    username = request.session.get('username')
+
+    subject = 'Please deliver these things'
+    #message = 'Trying to send khali msg ' + sendcart
+    send_email_from = Email
+    send_email_to = 'ranvir.singh1114@gmail.com'
+
+
+    send_mail(subject, message, send_email_from, [send_email_to], fail_silently=False)
+    html = message
+    return HttpResponse(html)
 
 
 

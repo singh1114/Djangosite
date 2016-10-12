@@ -27,6 +27,10 @@ class Cement(Idishere):
 
 	Price = models.FloatField("Price per 50kg.")	#Please change this name to price of cement.
 
+	# This class is added to make the names of the models readable 
+	class Meta:
+		verbose_name_plural = "Cement"
+
 	def __str__(self):
 		return self.Company_Name
 
@@ -51,6 +55,10 @@ class BrickOrTile(Idishere):
 
 	Price = models.FloatField("Price of Brick or Tile per piece")
 
+	# This class is added to make the names of the models readable 
+	class Meta:
+		verbose_name_plural = "Bricks and Tiles"
+
 	def __str__(self):
 		return self.Brand_of_Brick
 
@@ -66,6 +74,10 @@ class WaterTanker(Idishere):
 
 	Price = models.FloatField("Price of Tanker")
 
+	# This class is added to make the names of the models readable 
+	class Meta:
+		verbose_name_plural = "Water Tanker"
+
 	def __str__(self):
 		return self.Company_of_tanker
 
@@ -79,6 +91,10 @@ class Sand(Idishere):
 	Type_of_Sand = models.CharField("Type of Sand", choices = type_of_sand, max_length = 30)
 
 	Price = models.FloatField("Price of Sand")
+
+	# This class is added to make the names of the models readable 
+	class Meta:
+		verbose_name_plural = "Sand"
 
 	def __str__(self):
 		return self.Type_of_Sand
@@ -102,6 +118,10 @@ class CourseAggregate(Idishere):
 	Size_of_course = models.CharField("Size of course", choices = size, max_length = 10)
 	Amount_of_course = models.CharField("Choose a unit", choices = amount, max_length = 15)
 	Price = models.FloatField("Price of Course", default = 200)
+
+	# This class is added to make the names of the models readable 
+	class Meta:
+		verbose_name_plural = "Course Aggregate"
 
 	def __str__(self):
 		return self.Place_of_course
