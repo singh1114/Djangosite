@@ -38,8 +38,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 
 # Optional SMTP authentication information for EMAIL_HOST.
-EMAIL_HOST_USER = 'ranvir.singh1114@gmail.com'
-EMAIL_HOST_PASSWORD = '******'
+EMAIL_HOST_USER = 'your_email'
+EMAIL_HOST_PASSWORD = 'your_password'
 EMAIL_USE_TLS = True
 
 ###### For e-mail configuration #####################################
@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.linkedin',
-    'parsley',
+    #'parsley',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -104,11 +104,11 @@ WSGI_APPLICATION = 'duggal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'duggalwebportal',
-	'USER': 'root',
-	'PASSWORD': 'Ranvirsingh',
-	'HOST': 'localhost',
-	'PORT': '',
+        'NAME': 'database_name',
+    	'USER': 'database_username_mostly_root',
+    	'PASSWORD': 'database_password',
+    	'HOST': 'localhost',
+    	'PORT': '',
     }
 }
 
